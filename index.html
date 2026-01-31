@@ -3,65 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <title>Sarthak Clinic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body { font-family: Arial, sans-serif; padding: 15px; }
+    input, select, textarea, button { width: 100%; margin: 6px 0; padding: 8px; }
+    textarea { min-height: 60px; }
+    canvas { background:#fff; }
+    li { padding:6px; border-bottom:1px solid #ddd; cursor:pointer; }
+  </style>
 </head>
 
 <body>
-  <header>
-    <h1>Sarthak Dental & Beauty Clinic</h1>
-    <p>Dr. Shailendra Dubey</p>
-  </header>
 
-  <main>
-    <h2>Patient Details</h2>
-    <input placeholder="Patient Name" id="name">
-    <input placeholder="Age" id="age" type="number">
+<main>
 
-    <select id="problem">
-      <option value="">Select Problem</option>
-      <option>Tooth Pain</option>
-      <option>Post Extraction</option>
-      <option>Acne</option>
-      <option>Scar (All Types)</option>
-      <option>Pigmentation</option>
-      <option>Laser Hair Removal</option>
-    </select>
+<h2>Sarthak Dental & Facial Aesthetic Clinic</h2>
 
-    <textarea id="diagnosis" placeholder="Diagnosis"></textarea>
+<input id="name" placeholder="Patient Name">
+<input id="age" placeholder="Age">
 
-    <h2>Instructions Language</h2>
-    <select id="lang">
-      <option value="en">English</option>
-      <option value="hi">Hindi</option>
-    </select>
+<select id="problem">
+  <option value="">Select Problem</option>
+  <option>Tooth Pain</option>
+  <option>Post Extraction</option>
+  <option>RCT</option>
+  <option>Acne</option>
+  <option>Scar (All Types)</option>
+  <option>Pigmentation</option>
+  <option>Laser Hair Removal</option>
+</select>
 
-    <textarea id="instructions" placeholder="Instructions"></textarea>
+<textarea id="diagnosis" placeholder="Diagnosis"></textarea>
 
-    <button onclick="generatePDF()">Generate Prescription</button>
-    <h2>Doctor Signature</h2>
+<h3>Instructions Language</h3>
+<select id="lang">
+  <option value="en">English</option>
+  <option value="hi">Hindi</option>
+</select>
 
+<textarea id="instructions" placeholder="Instructions"></textarea>
+
+<button onclick="generatePDF()">Generate Prescription</button>
+
+<h3>Doctor Signature</h3>
 <canvas id="signature-pad" width="300" height="150"
 style="border:1px solid #999; width:100%; max-width:300px;"></canvas>
-<br>
+
 <button type="button" onclick="clearSignature()">Clear Signature</button>
-  </main>
+
+</main>
+
 <hr>
 
-<h2>Patient History</h2>
-
+<h3>Patient History</h3>
 <input id="searchHistory" placeholder="Search patient name">
+<ul id="historyList"></ul>
 
-<ul id="historyList" style="list-style:none; padding:0;"></ul>
-  <footer>
-    <p>
-      Valid for 1 month from date of issue.<br>
-      Not valid for medico-legal purposes.
-    </p>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+<footer>
+  <p>
+    Valid for 1 month from date of issue.<br>
+    Not valid for medico-legal purposes.
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="app.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>
