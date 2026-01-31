@@ -1,43 +1,72 @@
-const instructionMap = {
-  "Post Extraction": {
-    en: "Do not rinse or spit forcefully for 24 hours. Take soft and liquid diet. Avoid chewing from treated side.",
-    hi: "24 घंटे तक ज़ोर से कुल्ला या थूकें नहीं। नरम व तरल आहार लें। इलाज वाली साइड से चबाने से बचें।"
-  },
-  "Tooth Pain": {
-    en: "Avoid hard food. Maintain oral hygiene. Take medicines as prescribed.",
-    hi: "कठोर भोजन से बचें। मुँह की सफ़ाई रखें। दवाइयाँ डॉक्टर की सलाह अनुसार लें।"
-  },
-  "Acne": {
-    en: "Do not squeeze acne. Wash face gently. Avoid oily cosmetics.",
-    hi: "मुहांसों को हाथ से न फोड़ें। हल्के हाथ से चेहरा धोएँ। तैलीय कॉस्मेटिक्स से बचें।"
-  },
-  "Scar (All Types)": {
-    en: "Do not scratch scar. Apply prescribed cream regularly. Use sunscreen.",
-    hi: "निशान को खुजलाएँ नहीं। बताई गई क्रीम नियमित लगाएँ। सनस्क्रीन का उपयोग करें।"
-  },
-  "Pigmentation": {
-    en: "Avoid sun exposure. Use sunscreen daily. Do not use harsh products.",
-    hi: "धूप से बचें। रोज़ सनस्क्रीन लगाएँ। तेज़ केमिकल प्रोडक्ट्स का उपयोग न करें।"
-  },
-  "Laser Hair Removal": {
-    en: "Avoid waxing before procedure. Use sunscreen after laser. Avoid sun exposure.",
-    hi: "लेज़र से पहले वैक्सिंग न करें। लेज़र के बाद सनस्क्रीन लगाएँ। धूप से बचें।"
-  }
-};
-
-function updateInstructions() {
-  const problem = document.getElementById("problem").value;
-  const lang = document.getElementById("lang").value;
-
-  if (instructionMap[problem]) {
-    document.getElementById("instructions").value =
-      instructionMap[problem][lang];
-  }
-}
-
-document.getElementById("problem").addEventListener("change", updateInstructions);
-document.getElementById("lang").addEventListener("change", updateInstructions);
-
 function generatePDF() {
-  alert("Next step: PDF generation will be added.");
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const name = document.getElementById("name").value;
+  const age = document.getElementById("age").value;
+  const problem = document.getElementById("problem").value;
+  const diagnosis = document.getElementById("diagnosis").value;
+  const instructions = document.getElementById("instructions").value;
+
+  const today = new Date().toLocaleDateString();
+
+  let y = 20;
+
+  doc.setFontSize(16);
+  doc.text("Sarthak Dental & Facial Aesthetic Clinic", 105, y, { align: "center" });
+
+  y += 8;
+  doc.setFontSize(11);
+  doc.text("Dr. Shailendra Dubey", 105, y, { align: "center" });
+  y += 6;
+  doc.text("Dental | Skin | Hair Aesthetics", 105, y, { align: "center" });
+
+  y += 10;
+  doc.line(10, y, 200, y);
+  y += 8;
+
+  doc.setFontSize(11);
+  doc.text(`Patient Name : ${name}`, 10, y);
+  doc.text(`Age : ${age}`, 150, y);
+  y += 7;
+
+  doc.text(`Date : ${today}`, 10, y);
+  y += 10;
+
+  doc.setFontSize(12);
+  doc.text("Chief Complaint / Problem:", 10, y);
+  y += 6;
+  doc.setFontSize(11);
+  doc.text(problem || "-", 10, y);
+  y += 8;
+
+  doc.setFontSize(12);
+  doc.text("Diagnosis:", 10, y);
+  y += 6;
+  doc.setFontSize(11);
+  doc.text(diagnosis || "-", 10, y);
+  y += 10;
+
+  doc.setFontSize(12);
+  doc.text("Instructions:", 10, y);
+  y += 6;
+  doc.setFontSize(11);
+  doc.text(doc.splitTextToSize(instructions || "-", 180), 10, y);
+  y += 25;
+
+  doc.line(10, y, 200, y);
+  y += 10;
+
+  doc.setFontSize(10);
+  doc.text("Valid for 1 month from date of issue.", 10, y);
+  y += 5;
+  doc.text("Not valid for medico-legal purposes.", 10, y);
+
+  y += 15;
+  doc.text("Doctor Signature:", 140, y);
+  doc.line(140, y + 2, 195, y + 2);
+  y += 8;
+  doc.text("Dr. Shailendra Dubey", 140, y);
+
+  doc.save(`Prescription_${name || "Patient"}.pdf`);
 }
